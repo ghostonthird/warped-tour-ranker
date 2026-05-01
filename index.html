@@ -20,7 +20,7 @@
     --radius: 6px;
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
   body {
     background: var(--bg);
@@ -28,13 +28,118 @@
     font-family: 'DM Sans', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
+    user-select: none;
   }
 
-  /* ─────────────────────────────────────────
-     PROFILE SCREEN
-  ───────────────────────────────────────── */
-  #profile-screen {
+  /* ─── SETUP SCREEN ─── */
+  #setup-screen {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    gap: 24px;
+    text-align: center;
+  }
+
+  .setup-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+  }
+
+  .setup-logo span {
+    display: block;
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--accent2);
+    margin-bottom: 4px;
+  }
+
+  .setup-box {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 12px;
+    padding: 28px 24px;
+    width: 100%;
+    max-width: 400px;
+    text-align: left;
+  }
+
+  .setup-box h2 {
+    font-family: 'Special Elite', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .setup-field { margin-bottom: 14px; }
+
+  .setup-field label {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 5px;
+    letter-spacing: 0.05em;
+  }
+
+  .setup-field input {
+    width: 100%;
+    background: #0d0d0d;
+    border: 1px solid var(--border2);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding: 10px 12px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .setup-field input:focus { border-color: var(--accent); }
+  .setup-field input::placeholder { color: #555; }
+
+  .setup-field small {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 5px;
+    line-height: 1.5;
+  }
+
+  .setup-btn {
+    width: 100%;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 11px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    margin-top: 4px;
+  }
+
+  .setup-btn:hover { opacity: 0.85; }
+  .setup-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .setup-error {
+    font-size: 12px;
+    color: #ff6b6b;
+    margin-top: 8px;
+    display: none;
+  }
+
+  /* ─── PROFILE SCREEN ─── */
+  #profile-screen {
+    display: none;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
@@ -61,13 +166,7 @@
     z-index: 0;
   }
 
-  .scene-wrap {
-    position: relative;
-    width: 100%;
-    max-width: 700px;
-    z-index: 1;
-  }
-
+  .scene-wrap { position: relative; width: 100%; max-width: 700px; z-index: 1; }
   .hero-svg { width: 100%; display: block; }
 
   .ticket-card {
@@ -93,7 +192,7 @@
   .ticket-top-label {
     font-family: 'Special Elite', monospace;
     font-size: 11px;
-    color: rgba(255,255,255,0.7);
+    color: rgba(255,255,255,0.75);
     letter-spacing: 0.15em;
     text-transform: uppercase;
   }
@@ -105,9 +204,9 @@
     color: #fff;
   }
 
-  .ticket-perf { display: flex; gap: 0; }
+  .ticket-perf { display: flex; }
 
-  .ticket-left { flex: 1; padding: 20px 20px; }
+  .ticket-left { flex: 1; padding: 20px; }
 
   .ticket-stub {
     width: 70px;
@@ -134,7 +233,6 @@
     font-family: 'Bebas Neue', sans-serif;
     font-size: 22px;
     color: var(--accent);
-    letter-spacing: 0.05em;
   }
 
   .ticket-field { margin-bottom: 14px; }
@@ -150,7 +248,6 @@
   }
 
   .ticket-field .val { font-size: 14px; font-weight: 500; color: var(--text); }
-
   .ticket-divider { height: 1px; background: #222; margin: 16px 0; }
 
   .profile-box-label {
@@ -171,22 +268,26 @@
     background: var(--surface2);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 9px 12px;
+    padding: 10px 12px;
     cursor: pointer;
-    transition: border-color 0.15s, background 0.15s;
+    transition: border-color 0.15s;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  .profile-item:hover { border-color: var(--accent); background: #202020; }
+  .profile-item:active { border-color: var(--accent); background: #202020; }
+
   .profile-item .pname { font-size: 14px; font-weight: 500; }
   .profile-item .pmeta { font-size: 11px; color: var(--muted); }
 
   .profile-item .pdel {
-    font-size: 16px; color: var(--muted); background: none; border: none;
-    cursor: pointer; padding: 0 2px; opacity: 0; transition: opacity 0.15s; line-height: 1;
+    font-size: 20px;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
   }
-
-  .profile-item:hover .pdel { opacity: 1; }
-  .profile-item .pdel:hover { color: var(--accent); }
 
   .new-profile { display: flex; gap: 8px; }
 
@@ -197,14 +298,14 @@
     border-radius: var(--radius);
     color: var(--text);
     font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    padding: 8px 12px;
+    font-size: 14px;
+    padding: 9px 12px;
     outline: none;
     transition: border-color 0.15s;
   }
 
   .new-profile input:focus { border-color: var(--accent); }
-  .new-profile input::placeholder { color: var(--muted); }
+  .new-profile input::placeholder { color: #555; }
 
   .btn {
     background: var(--accent);
@@ -212,15 +313,12 @@
     border: none;
     border-radius: var(--radius);
     font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
-    padding: 8px 16px;
+    padding: 9px 16px;
     cursor: pointer;
-    transition: opacity 0.15s;
     white-space: nowrap;
   }
-
-  .btn:hover { opacity: 0.85; }
 
   .barcode-strip {
     padding: 10px 20px;
@@ -230,12 +328,10 @@
     gap: 10px;
   }
 
-  .barcode-svg { flex-shrink: 0; }
-
   .barcode-text {
     font-family: 'Special Elite', monospace;
     font-size: 9px;
-    color: #444;
+    color: #555;
     letter-spacing: 0.1em;
   }
 
@@ -245,25 +341,21 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0;
     padding-bottom: 40px;
     width: 100%;
   }
 
-  /* ─────────────────────────────────────────
-     RANKER SCREEN
-  ───────────────────────────────────────── */
+  /* ─── RANKER SCREEN ─── */
   #ranker-screen { display: none; }
 
   .header {
     background: var(--surface);
     border-bottom: 1px solid var(--border);
-    padding: 0 20px;
+    padding: 0 16px;
     display: flex;
     align-items: stretch;
     flex-wrap: wrap;
     position: relative;
-    overflow: hidden;
   }
 
   .header::before {
@@ -275,7 +367,7 @@
   }
 
   .header-brand {
-    padding: 12px 20px 12px 24px;
+    padding: 10px 16px 10px 20px;
     border-right: 1px solid var(--border);
     display: flex;
     flex-direction: column;
@@ -293,35 +385,35 @@
 
   .header-logo {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
+    font-size: 20px;
     letter-spacing: 0.1em;
     color: var(--text);
     line-height: 1;
   }
 
-  .header-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .header-sub { font-size: 10px; color: var(--muted); margin-top: 1px; }
 
   .header-right {
     margin-left: auto;
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 12px 0;
+    gap: 8px;
+    padding: 10px 0;
   }
 
   .user-pill {
     display: flex;
     align-items: center;
-    gap: 7px;
+    gap: 6px;
     background: var(--surface2);
     border: 1px solid var(--border2);
     border-radius: 20px;
-    padding: 4px 12px;
+    padding: 4px 10px;
     font-size: 13px;
     font-weight: 500;
   }
 
-  .user-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+  .user-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
 
   .save-btn {
     background: var(--accent);
@@ -331,12 +423,13 @@
     font-family: 'DM Sans', sans-serif;
     font-size: 13px;
     font-weight: 600;
-    padding: 7px 16px;
+    padding: 7px 14px;
     cursor: pointer;
     transition: opacity 0.15s;
   }
 
-  .save-btn:hover { opacity: 0.85; }
+  .save-btn:active { opacity: 0.75; }
+  .save-btn:disabled { opacity: 0.4; }
 
   .switch-btn {
     background: transparent;
@@ -345,21 +438,30 @@
     border-radius: var(--radius);
     font-family: 'DM Sans', sans-serif;
     font-size: 13px;
-    padding: 7px 12px;
+    padding: 7px 10px;
     cursor: pointer;
-    transition: color 0.15s, border-color 0.15s;
   }
 
-  .switch-btn:hover { color: var(--text); border-color: var(--border2); }
+  .save-toast { font-size: 12px; color: var(--muted); min-width: 50px; text-align: right; transition: opacity 0.3s; }
 
-  .save-toast { font-size: 12px; color: var(--muted); min-width: 54px; text-align: right; transition: opacity 0.3s; }
+  /* ─── HINT BAR ─── */
+  .hint-bar {
+    background: #1a1000;
+    border-bottom: 1px solid #2a1a00;
+    padding: 7px 16px;
+    font-size: 12px;
+    color: var(--accent2);
+    text-align: center;
+    letter-spacing: 0.03em;
+  }
 
+  /* ─── LEGEND ─── */
   .legend-strip {
     background: var(--surface);
     border-bottom: 1px solid var(--border);
-    padding: 8px 24px;
+    padding: 7px 16px;
     display: flex;
-    gap: 18px;
+    gap: 14px;
     flex-wrap: wrap;
     align-items: center;
   }
@@ -367,7 +469,8 @@
   .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--muted); }
   .legend-dot { width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0; }
 
-  .tier-list { padding: 14px 20px 0; }
+  /* ─── TIER ROWS ─── */
+  .tier-list { padding: 10px 12px 0; }
 
   .tier-row {
     display: flex;
@@ -376,20 +479,25 @@
     border-radius: 7px;
     overflow: hidden;
     border: 1px solid var(--border);
+    transition: border-color 0.15s;
   }
 
+  .tier-row.drop-target { border-color: #666; }
+
   .tier-label {
-    width: 54px;
-    min-height: 54px;
+    width: 48px;
+    min-height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
+    font-size: 26px;
     color: #fff;
     flex-shrink: 0;
     letter-spacing: 0.05em;
     position: relative;
+    cursor: pointer;
+    transition: filter 0.15s;
   }
 
   .tier-label::after {
@@ -400,23 +508,30 @@
     pointer-events: none;
   }
 
+  .tier-label.tap-target {
+    outline: 3px solid #fff;
+    outline-offset: -3px;
+    filter: brightness(1.3);
+  }
+
   .tier-bands {
     flex: 1;
     background: var(--surface);
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
-    padding: 8px 10px;
+    padding: 7px 8px;
     align-content: flex-start;
-    min-height: 54px;
-    transition: background 0.1s;
+    min-height: 48px;
+    cursor: pointer;
   }
 
-  .tier-bands.drag-over { background: #1e1e1e; outline: 2px dashed #444; outline-offset: -3px; }
+  .tier-bands.drag-over { background: #1e1e1e; outline: 2px dashed #555; outline-offset: -3px; }
 
-  .pool-section { padding: 14px 20px 16px; }
+  /* ─── POOL ─── */
+  .pool-section { padding: 12px 12px 12px; }
 
-  .pool-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+  .pool-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
 
   .pool-label {
     font-family: 'Special Elite', monospace;
@@ -444,19 +559,17 @@
     color: var(--text);
     font-family: 'DM Sans', sans-serif;
     font-size: 13px;
-    padding: 6px 12px 6px 28px;
+    padding: 6px 10px 6px 26px;
     outline: none;
-    width: 180px;
-    transition: border-color 0.15s;
+    width: 160px;
   }
 
-  .pool-search input:focus { border-color: var(--border2); }
-  .pool-search input::placeholder { color: var(--muted); }
+  .pool-search input::placeholder { color: #555; }
 
   .pool-search::before {
     content: '⌕';
     position: absolute;
-    left: 8px;
+    left: 7px;
     top: 50%;
     transform: translateY(-50%);
     color: var(--muted);
@@ -468,41 +581,49 @@
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 8px;
-    min-height: 72px;
+    min-height: 60px;
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
-    padding: 10px;
-    transition: background 0.1s;
+    padding: 8px;
   }
 
-  .pool.drag-over { background: #181818; outline: 2px dashed #444; outline-offset: -3px; }
   .pool-empty { color: var(--muted); font-size: 13px; align-self: center; }
 
+  /* ─── CHIPS ─── */
   .chip {
     display: inline-flex;
     align-items: center;
-    padding: 4px 10px;
+    padding: 5px 11px;
     border-radius: 20px;
     font-size: 12px;
     font-weight: 500;
-    cursor: grab;
-    user-select: none;
+    cursor: pointer;
     background: var(--surface2);
-    border: 1px solid var(--border2);
+    border: 1.5px solid var(--border2);
     color: var(--text);
     white-space: nowrap;
-    transition: transform 0.1s, border-color 0.1s;
+    transition: transform 0.1s, border-color 0.1s, background 0.1s;
+    touch-action: manipulation;
   }
 
-  .chip:hover { transform: scale(1.04); border-color: #555; }
-  .chip:active { cursor: grabbing; }
-  .chip.dragging { opacity: 0.3; transform: scale(0.95); }
+  .chip:active { transform: scale(0.96); }
 
+  /* Selected state: glowing orange outline */
+  .chip.selected {
+    border-color: var(--accent);
+    background: #2a1000;
+    box-shadow: 0 0 0 2px rgba(255,60,0,0.3);
+  }
+
+  /* Dragging (desktop) */
+  .chip.dragging { opacity: 0.3; }
+
+  /* ─── FOOTER ─── */
   .footer-band {
-    margin: 4px 20px 20px;
+    margin: 4px 12px 20px;
     border-top: 1px solid var(--border);
-    padding-top: 12px;
+    padding-top: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -514,18 +635,18 @@
 
   .reset-btn {
     background: transparent;
-    color: #555;
+    color: #666;
     border: 1px solid #2a2a2a;
     border-radius: var(--radius);
     font-family: 'DM Sans', sans-serif;
     font-size: 12px;
     padding: 5px 12px;
     cursor: pointer;
-    transition: color 0.15s, border-color 0.15s;
   }
 
-  .reset-btn:hover { color: var(--accent); border-color: var(--accent); }
+  .reset-btn:active { color: var(--accent); border-color: var(--accent); }
 
+  /* ─── DRAG GHOST ─── */
   #drag-ghost {
     position: fixed;
     pointer-events: none;
@@ -542,17 +663,110 @@
     transform: rotate(-2deg);
     box-shadow: 0 4px 12px rgba(255,60,0,0.4);
   }
+
+  /* ─── LOADING OVERLAY ─── */
+  #loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    z-index: 10000;
+  }
+
+  .spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid #222;
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .loading-text {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ─── SYNC STATUS ─── */
+  .sync-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #555;
+    flex-shrink: 0;
+    transition: background 0.3s;
+  }
+  .sync-dot.ok { background: #4a9e4a; }
+  .sync-dot.err { background: #cc3000; }
+  .sync-dot.busy {
+    background: var(--accent2);
+    animation: pulse 0.8s ease-in-out infinite alternate;
+  }
+  @keyframes pulse { from { opacity: 0.4; } to { opacity: 1; } }
 </style>
 </head>
 <body>
 
 <div id="drag-ghost"></div>
 
-<!-- ═══════════════════════════════════════
-     PROFILE SCREEN
-═══════════════════════════════════════ -->
-<div id="profile-screen">
+<!-- ═══════════════════════════════════
+     LOADING OVERLAY
+═══════════════════════════════════ -->
+<div id="loading-overlay">
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.15em;color:var(--accent)">Warped Tour 2026</div>
+  <div class="spinner"></div>
+  <div class="loading-text">Loading...</div>
+</div>
 
+<!-- ═══════════════════════════════════
+     SETUP SCREEN (first-time config)
+═══════════════════════════════════ -->
+<div id="setup-screen">
+  <div class="setup-logo">
+    <span>&#9733; Stallings Family &#9733;</span>
+    Band Tier Ranker
+  </div>
+
+  <div class="setup-box">
+    <h2>One-time setup</h2>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.6">
+      This app uses JSONBin to sync rankings across devices. You'll need a free API key — takes about 2 minutes at <strong style="color:var(--text)">jsonbin.io</strong>.
+    </p>
+
+    <div class="setup-field">
+      <label>JSONBin Master Key</label>
+      <input type="password" id="api-key-input" placeholder="$2a$10$..." autocomplete="off"/>
+      <small>Sign up at jsonbin.io → Dashboard → API Keys → copy your Master Key</small>
+    </div>
+
+    <div class="setup-field">
+      <label>Bin ID <span style="color:#555">(leave blank to create a new bin)</span></label>
+      <input type="text" id="bin-id-input" placeholder="e.g. 6642f3abc123..." autocomplete="off"/>
+      <small>If others have already set up the app, enter the Bin ID they share with you so you all use the same data.</small>
+    </div>
+
+    <button class="setup-btn" id="setup-btn" onclick="doSetup()">Save &amp; Continue</button>
+    <div class="setup-error" id="setup-error"></div>
+  </div>
+
+  <p style="font-size:12px;color:var(--muted);max-width:360px;line-height:1.6;text-align:center">
+    Your API key is stored only on this device. Rankings are stored in your JSONBin account.
+  </p>
+</div>
+
+<!-- ═══════════════════════════════════
+     PROFILE SCREEN
+═══════════════════════════════════ -->
+<div id="profile-screen">
   <div class="scene-wrap">
     <svg class="hero-svg" viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -573,11 +787,7 @@
           <stop offset="100%" stop-color="#ff3300" stop-opacity="0"/>
         </radialGradient>
       </defs>
-
-      <!-- Sky -->
       <rect width="700" height="300" fill="url(#sky)"/>
-
-      <!-- Stars -->
       <g fill="#fff" opacity="0.6">
         <circle cx="40" cy="20" r="1"/><circle cx="90" cy="10" r="0.8"/>
         <circle cx="150" cy="30" r="1.2"/><circle cx="200" cy="8" r="0.7"/>
@@ -588,8 +798,6 @@
         <circle cx="120" cy="48" r="0.8"/><circle cx="310" cy="42" r="0.9"/>
         <circle cx="490" cy="38" r="0.7"/><circle cx="615" cy="50" r="1"/>
       </g>
-
-      <!-- City skyline -->
       <g fill="#111" opacity="0.8">
         <rect x="0" y="160" width="30" height="60"/><rect x="25" y="145" width="18" height="75"/>
         <rect x="38" y="155" width="22" height="65"/><rect x="55" y="148" width="14" height="72"/>
@@ -600,28 +808,18 @@
         <rect x="31" y="138" width="2" height="8"/><rect x="43" y="149" width="2" height="6"/>
         <rect x="645" y="143" width="2" height="8"/><rect x="673" y="138" width="2" height="8"/>
       </g>
-
-      <!-- Spotlights -->
       <ellipse cx="200" cy="200" rx="80" ry="140" fill="url(#spot1)" opacity="0.7"/>
       <ellipse cx="350" cy="210" rx="60" ry="120" fill="url(#spot2)" opacity="0.6"/>
       <ellipse cx="500" cy="200" rx="80" ry="140" fill="url(#spot3)" opacity="0.7"/>
-
-      <!-- Spotlight beam lines -->
       <g stroke="#ff6600" stroke-width="0.5" opacity="0.15">
         <line x1="200" y1="205" x2="140" y2="100"/><line x1="200" y1="205" x2="200" y2="90"/>
         <line x1="200" y1="205" x2="260" y2="100"/><line x1="500" y1="205" x2="440" y2="100"/>
         <line x1="500" y1="205" x2="500" y2="90"/><line x1="500" y1="205" x2="560" y2="100"/>
       </g>
-
-      <!-- Stage floor -->
       <rect x="80" y="195" width="540" height="10" fill="#1a1a1a" rx="1"/>
       <rect x="80" y="194" width="540" height="2" fill="#333"/>
       <rect x="90" y="203" width="8" height="30" fill="#161616"/>
       <rect x="600" y="203" width="8" height="30" fill="#161616"/>
-      <rect x="200" y="203" width="6" height="20" fill="#161616"/>
-      <rect x="494" y="203" width="6" height="20" fill="#161616"/>
-
-      <!-- Truss -->
       <rect x="75" y="110" width="550" height="8" fill="#1e1e1e" rx="2"/>
       <g stroke="#252525" stroke-width="1.5">
         <line x1="100" y1="112" x2="130" y2="118"/><line x1="130" y1="112" x2="100" y2="118"/>
@@ -636,86 +834,57 @@
       </g>
       <rect x="85" y="118" width="4" height="77" fill="#1e1e1e"/>
       <rect x="611" y="118" width="4" height="77" fill="#1e1e1e"/>
-      <rect x="205" y="118" width="3" height="77" fill="#1e1e1e"/>
-      <rect x="492" y="118" width="3" height="77" fill="#1e1e1e"/>
-
-      <!-- Backdrop panels -->
       <rect x="92" y="118" width="110" height="77" fill="#0e0e0e" rx="1"/>
       <rect x="207" y="118" width="286" height="77" fill="#0e0e0e" rx="1"/>
       <rect x="498" y="118" width="110" height="77" fill="#0e0e0e" rx="1"/>
-
-      <!-- Stage lights -->
       <g fill="#ff5500">
-        <circle cx="120" cy="113" r="4" opacity="0.9"/><circle cx="180" cy="113" r="4" opacity="0.85"/>
-        <circle cx="240" cy="113" r="4" opacity="0.9"/><circle cx="350" cy="113" r="5" opacity="1"/>
-        <circle cx="460" cy="113" r="4" opacity="0.85"/><circle cx="520" cy="113" r="4" opacity="0.9"/>
-        <circle cx="580" cy="113" r="4" opacity="0.85"/>
+        <circle cx="120" cy="113" r="4"/><circle cx="180" cy="113" r="4"/>
+        <circle cx="240" cy="113" r="4"/><circle cx="350" cy="113" r="5"/>
+        <circle cx="460" cy="113" r="4"/><circle cx="520" cy="113" r="4"/>
+        <circle cx="580" cy="113" r="4"/>
       </g>
       <g fill="#ffdd00">
         <circle cx="150" cy="113" r="3" opacity="0.7"/><circle cx="300" cy="113" r="3" opacity="0.7"/>
         <circle cx="400" cy="113" r="3" opacity="0.7"/><circle cx="550" cy="113" r="3" opacity="0.7"/>
       </g>
-
-      <!-- Drum kit -->
       <g fill="#181818" transform="translate(315,155)">
-        <ellipse cx="20" cy="28" rx="16" ry="12"/>
-        <ellipse cx="0" cy="22" rx="9" ry="6"/>
+        <ellipse cx="20" cy="28" rx="16" ry="12"/><ellipse cx="0" cy="22" rx="9" ry="6"/>
         <rect x="-14" y="0" width="2" height="28" fill="#1a1a1a"/>
         <ellipse cx="-13" cy="2" rx="8" ry="2.5"/>
         <ellipse cx="38" cy="8" rx="10" ry="2.5" transform="rotate(-10,38,8)"/>
         <ellipse cx="10" cy="12" rx="8" ry="5"/>
-        <rect x="22" y="30" width="3" height="10" fill="#1a1a1a"/>
-        <ellipse cx="23" cy="40" rx="5" ry="2"/>
       </g>
-
-      <!-- Amp stacks -->
       <g fill="#141414">
         <rect x="105" y="160" width="35" height="35" rx="2"/>
         <rect x="108" y="163" width="29" height="13" rx="1" fill="#0e0e0e"/>
         <rect x="108" y="178" width="29" height="13" rx="1" fill="#0e0e0e"/>
         <circle cx="117" cy="169" r="3" fill="#1a1a1a"/><circle cx="127" cy="169" r="3" fill="#1a1a1a"/>
-        <circle cx="117" cy="184" r="3" fill="#1a1a1a"/><circle cx="127" cy="184" r="3" fill="#1a1a1a"/>
         <rect x="560" y="160" width="35" height="35" rx="2"/>
         <rect x="563" y="163" width="29" height="13" rx="1" fill="#0e0e0e"/>
         <rect x="563" y="178" width="29" height="13" rx="1" fill="#0e0e0e"/>
         <circle cx="572" cy="169" r="3" fill="#1a1a1a"/><circle cx="582" cy="169" r="3" fill="#1a1a1a"/>
-        <circle cx="572" cy="184" r="3" fill="#1a1a1a"/><circle cx="582" cy="184" r="3" fill="#1a1a1a"/>
       </g>
-
-      <!-- Band silhouettes -->
       <g fill="#111" transform="translate(340,140)">
-        <circle cx="0" cy="-8" r="7"/>
-        <rect x="-5" y="0" width="10" height="22" rx="3"/>
-        <rect x="-9" y="8" width="8" height="3" rx="1"/><rect x="1" y="8" width="8" height="3" rx="1"/>
-        <rect x="-1" y="22" width="3" height="14" rx="1"/>
+        <circle cx="0" cy="-8" r="7"/><rect x="-5" y="0" width="10" height="22" rx="3"/>
         <rect x="-18" y="3" width="14" height="3" rx="1" transform="rotate(-30,-18,3)"/>
         <rect x="5" y="0" width="14" height="3" rx="1" transform="rotate(25,5,0)"/>
       </g>
       <g fill="#0f0f0f" transform="translate(250,148)">
-        <circle cx="0" cy="-6" r="6"/>
-        <rect x="-4" y="0" width="8" height="18" rx="2"/>
-        <rect x="-7" y="6" width="6" height="2.5" rx="1"/><rect x="2" y="7" width="6" height="2.5" rx="1"/>
-        <rect x="-1" y="18" width="2.5" height="12" rx="1"/>
+        <circle cx="0" cy="-6" r="6"/><rect x="-4" y="0" width="8" height="18" rx="2"/>
+        <rect x="-7" y="6" width="6" height="2.5" rx="1"/>
       </g>
       <g fill="#0f0f0f" transform="translate(440,150)">
-        <circle cx="0" cy="-6" r="6"/>
-        <rect x="-4" y="0" width="8" height="18" rx="2"/>
-        <rect x="-7" y="5" width="6" height="2.5" rx="1"/><rect x="2" y="6" width="6" height="2.5" rx="1"/>
-        <rect x="-1" y="18" width="2.5" height="12" rx="1"/>
+        <circle cx="0" cy="-6" r="6"/><rect x="-4" y="0" width="8" height="18" rx="2"/>
+        <rect x="2" y="6" width="6" height="2.5" rx="1"/>
       </g>
-
-      <!-- Monitor wedges -->
       <g fill="#151515">
         <polygon points="160,195 200,185 210,195"/><polygon points="290,195 330,187 340,195"/>
         <polygon points="360,195 400,187 410,195"/><polygon points="490,195 530,185 540,195"/>
       </g>
-
-      <!-- Crowd silhouettes -->
       <g fill="#0d0d0d">
         <ellipse cx="20" cy="262" rx="10" ry="4"/><rect x="14" y="232" width="12" height="32" rx="4"/><circle cx="20" cy="227" r="8"/>
         <rect x="4" y="220" width="3" height="18" rx="1.5" transform="rotate(-20,4,220)"/>
         <ellipse cx="45" cy="264" rx="10" ry="4"/><rect x="39" y="235" width="12" height="30" rx="4"/><circle cx="45" cy="230" r="7"/>
-        <rect x="50" y="218" width="3" height="16" rx="1.5" transform="rotate(15,50,218)"/>
         <ellipse cx="70" cy="261" rx="10" ry="4"/><rect x="64" y="232" width="12" height="30" rx="4"/><circle cx="70" cy="227" r="7.5"/>
         <ellipse cx="95" cy="263" rx="10" ry="4"/><rect x="89" y="233" width="12" height="31" rx="4"/><circle cx="95" cy="228" r="7"/>
         <rect x="80" y="220" width="3" height="16" rx="1.5" transform="rotate(-25,80,220)"/>
@@ -723,12 +892,10 @@
         <rect x="126" y="215" width="3" height="18" rx="1.5" transform="rotate(20,126,215)"/>
         <ellipse cx="145" cy="264" rx="10" ry="4"/><rect x="139" y="234" width="12" height="31" rx="4"/><circle cx="145" cy="229" r="7"/>
         <ellipse cx="170" cy="262" rx="10" ry="4"/><rect x="164" y="232" width="12" height="31" rx="4"/><circle cx="170" cy="227" r="7.5"/>
-        <rect x="155" y="218" width="3" height="17" rx="1.5" transform="rotate(-15,155,218)"/>
         <ellipse cx="195" cy="263" rx="10" ry="4"/><rect x="189" y="233" width="12" height="31" rx="4"/><circle cx="195" cy="228" r="7"/>
         <rect x="200" y="215" width="3" height="17" rx="1.5" transform="rotate(30,200,215)"/>
         <ellipse cx="220" cy="261" rx="10" ry="4"/><rect x="214" y="230" width="12" height="32" rx="4"/><circle cx="220" cy="225" r="8"/>
         <ellipse cx="245" cy="263" rx="10" ry="4"/><rect x="239" y="233" width="12" height="31" rx="4"/><circle cx="245" cy="228" r="7"/>
-        <rect x="230" y="218" width="3" height="16" rx="1.5" transform="rotate(-20,230,218)"/>
         <ellipse cx="270" cy="262" rx="10" ry="4"/><rect x="264" y="231" width="12" height="32" rx="4"/><circle cx="270" cy="226" r="7.5"/>
         <rect x="276" y="213" width="3" height="18" rx="1.5" transform="rotate(25,276,213)"/>
         <ellipse cx="295" cy="263" rx="10" ry="4"/><rect x="289" y="233" width="12" height="31" rx="4"/><circle cx="295" cy="228" r="7"/>
@@ -738,33 +905,24 @@
         <rect x="350" y="212" width="3" height="18" rx="1.5" transform="rotate(20,350,212)"/>
         <ellipse cx="370" cy="263" rx="10" ry="4"/><rect x="364" y="233" width="12" height="31" rx="4"/><circle cx="370" cy="228" r="7"/>
         <ellipse cx="395" cy="262" rx="10" ry="4"/><rect x="389" y="231" width="12" height="32" rx="4"/><circle cx="395" cy="226" r="8"/>
-        <rect x="381" y="218" width="3" height="16" rx="1.5" transform="rotate(-18,381,218)"/>
         <ellipse cx="420" cy="263" rx="10" ry="4"/><rect x="414" y="233" width="12" height="31" rx="4"/><circle cx="420" cy="228" r="7"/>
         <rect x="425" y="214" width="3" height="18" rx="1.5" transform="rotate(28,425,214)"/>
         <ellipse cx="445" cy="261" rx="10" ry="4"/><rect x="439" y="230" width="12" height="32" rx="4"/><circle cx="445" cy="225" r="8"/>
         <ellipse cx="470" cy="262" rx="10" ry="4"/><rect x="464" y="231" width="12" height="32" rx="4"/><circle cx="470" cy="226" r="7.5"/>
-        <rect x="455" y="217" width="3" height="17" rx="1.5" transform="rotate(-22,455,217)"/>
         <ellipse cx="495" cy="263" rx="10" ry="4"/><rect x="489" y="233" width="12" height="31" rx="4"/><circle cx="495" cy="228" r="7"/>
         <rect x="500" y="215" width="3" height="16" rx="1.5" transform="rotate(15,500,215)"/>
         <ellipse cx="520" cy="262" rx="10" ry="4"/><rect x="514" y="231" width="12" height="32" rx="4"/><circle cx="520" cy="226" r="8"/>
         <ellipse cx="545" cy="263" rx="10" ry="4"/><rect x="539" y="233" width="12" height="31" rx="4"/><circle cx="545" cy="228" r="7"/>
         <rect x="530" y="219" width="3" height="16" rx="1.5" transform="rotate(-25,530,219)"/>
         <ellipse cx="570" cy="262" rx="10" ry="4"/><rect x="564" y="231" width="12" height="32" rx="4"/><circle cx="570" cy="226" r="7.5"/>
-        <rect x="575" y="213" width="3" height="18" rx="1.5" transform="rotate(22,575,213)"/>
         <ellipse cx="595" cy="263" rx="10" ry="4"/><rect x="589" y="233" width="12" height="31" rx="4"/><circle cx="595" cy="228" r="7"/>
         <ellipse cx="620" cy="262" rx="10" ry="4"/><rect x="614" y="231" width="12" height="32" rx="4"/><circle cx="620" cy="226" r="8"/>
         <rect x="606" y="215" width="3" height="18" rx="1.5" transform="rotate(-18,606,215)"/>
         <ellipse cx="645" cy="263" rx="10" ry="4"/><rect x="639" y="233" width="12" height="31" rx="4"/><circle cx="645" cy="228" r="7"/>
-        <rect x="650" y="215" width="3" height="16" rx="1.5" transform="rotate(20,650,215)"/>
         <ellipse cx="670" cy="262" rx="10" ry="4"/><rect x="664" y="231" width="12" height="32" rx="4"/><circle cx="670" cy="226" r="7.5"/>
         <ellipse cx="690" cy="263" rx="10" ry="4"/><rect x="684" y="233" width="12" height="31" rx="4"/><circle cx="690" cy="228" r="7"/>
-        <rect x="695" y="214" width="3" height="18" rx="1.5" transform="rotate(25,695,214)"/>
       </g>
-
-      <!-- Ground -->
       <rect x="0" y="280" width="700" height="20" fill="#0a0a0a"/>
-
-      <!-- Warped van left -->
       <g transform="translate(8,230)">
         <rect x="0" y="10" width="62" height="34" rx="4" fill="#111"/>
         <rect x="40" y="2" width="22" height="20" rx="3" fill="#0e0e0e"/>
@@ -777,8 +935,6 @@
         <text x="21" y="32.5" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="7" fill="#fff" letter-spacing="0.1em">WARPED</text>
         <rect x="60" y="20" width="4" height="6" rx="1" fill="#ffee88" opacity="0.7"/>
       </g>
-
-      <!-- Tour van right -->
       <g transform="translate(625,235)">
         <rect x="0" y="8" width="60" height="32" rx="4" fill="#111"/>
         <rect x="0" y="2" width="22" height="19" rx="3" fill="#0e0e0e"/>
@@ -787,22 +943,15 @@
         <circle cx="48" cy="40" r="7" fill="#0a0a0a"/><circle cx="48" cy="40" r="3.5" fill="#151515"/>
         <rect x="24" y="12" width="12" height="8" rx="1.5" fill="#1a1a1a"/>
         <rect x="38" y="12" width="12" height="8" rx="1.5" fill="#1a1a1a"/>
-        <rect x="22" y="23" width="36" height="9" rx="1" fill="#222"/>
-        <rect x="0" y="18" width="4" height="6" rx="1" fill="#ffee88" opacity="0.4"/>
       </g>
-
-      <!-- Faded "2026" ghost text -->
       <text x="350" y="185" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="72" fill="none" stroke="#ff3c00" stroke-width="0.5" opacity="0.06" letter-spacing="0.1em">2026</text>
-
-      <!-- Fade bottom -->
       <rect x="0" y="255" width="700" height="45" fill="url(#sky)" opacity="0.8"/>
     </svg>
   </div>
 
-  <!-- Title + Ticket -->
   <div class="profile-content">
     <div style="text-align:center;margin-bottom:20px;margin-top:-10px;position:relative;z-index:2;">
-      <div style="font-family:'Special Elite',monospace;font-size:11px;letter-spacing:0.3em;color:var(--accent2);text-transform:uppercase;margin-bottom:6px;">&#9733; &nbsp; Stallings Family &nbsp; &#9733;</div>
+      <div style="font-family:'Special Elite',monospace;font-size:11px;letter-spacing:0.3em;color:var(--accent2);text-transform:uppercase;margin-bottom:6px;">&#9733; &nbsp;Stallings Family&nbsp; &#9733;</div>
       <div style="font-family:'Bebas Neue',sans-serif;font-size:52px;letter-spacing:0.12em;color:var(--text);line-height:1;text-shadow:0 0 40px rgba(255,60,0,0.25);">Band Tier Ranker</div>
       <div style="font-family:'Special Elite',monospace;font-size:12px;letter-spacing:0.2em;color:var(--muted);margin-top:6px;">Vans Warped Tour 2026 &middot; Washington D.C.</div>
     </div>
@@ -832,7 +981,9 @@
           </div>
           <div class="ticket-divider"></div>
           <div class="profile-box-label">Who's ranking?</div>
-          <div class="profile-list" id="profile-list"></div>
+          <div class="profile-list" id="profile-list">
+            <p style="font-size:12px;color:var(--muted)">Loading profiles...</p>
+          </div>
           <div class="new-profile">
             <input type="text" id="new-name" placeholder="Enter your name..." maxlength="30"/>
             <button class="btn" onclick="createProfile()">Go</button>
@@ -846,7 +997,7 @@
       </div>
 
       <div class="barcode-strip">
-        <svg class="barcode-svg" width="100" height="24" viewBox="0 0 100 24">
+        <svg width="100" height="24" viewBox="0 0 100 24">
           <g fill="#444">
             <rect x="0" y="0" width="2" height="24"/><rect x="3" y="0" width="1" height="24"/>
             <rect x="6" y="0" width="3" height="24"/><rect x="11" y="0" width="1" height="24"/>
@@ -867,12 +1018,19 @@
         <span class="barcode-text">WT2026-DC &middot; STALLINGS FAMILY EDITION &middot; 100 BANDS</span>
       </div>
     </div>
+
+    <!-- Bin ID share helper -->
+    <div id="bin-share" style="margin-top:16px;font-size:12px;color:var(--muted);text-align:center;max-width:400px;line-height:1.6;display:none">
+      <strong style="color:var(--text)">Share with family:</strong> Send them this Bin ID so they connect to the same data:<br>
+      <span id="bin-id-display" style="font-family:'Special Elite',monospace;color:var(--accent2);letter-spacing:0.1em;font-size:13px;cursor:pointer" onclick="copyBinId()"></span>
+      <span id="copy-confirm" style="color:#4a9e4a;margin-left:6px;display:none">Copied!</span>
+    </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════
+<!-- ═══════════════════════════════════
      RANKER SCREEN
-═══════════════════════════════════════ -->
+═══════════════════════════════════ -->
 <div id="ranker-screen">
   <div class="header">
     <div class="header-brand">
@@ -881,11 +1039,16 @@
       <div class="header-sub">Vans Warped Tour 2026 &middot; DC</div>
     </div>
     <div class="header-right">
+      <div class="sync-dot" id="sync-dot" title="Sync status"></div>
       <span class="save-toast" id="save-toast"></span>
       <div class="user-pill"><div class="user-dot"></div><span id="active-user"></span></div>
-      <button class="save-btn" onclick="save()">Save</button>
-      <button class="switch-btn" onclick="showProfiles()">Switch</button>
+      <button class="save-btn" id="save-btn" onclick="save()">Save</button>
+      <button class="switch-btn" onclick="showProfiles()">&#8592;</button>
     </div>
+  </div>
+
+  <div class="hint-bar" id="hint-bar">
+    Tap a band chip to select it, then tap a tier row to place it there
   </div>
 
   <div class="legend-strip" id="legend"></div>
@@ -896,27 +1059,24 @@
       <span class="pool-label">Unsorted</span>
       <span class="pool-count" id="pool-count">0</span>
       <div class="pool-search">
-        <input type="text" id="search" placeholder="Filter bands..." oninput="filterPool()"/>
+        <input type="text" id="search" placeholder="Filter..." oninput="filterPool()"/>
       </div>
     </div>
     <div class="pool" id="pool"></div>
   </div>
 
   <div class="footer-band">
-    <svg class="footer-scene" width="120" height="28" viewBox="0 0 120 28">
+    <svg class="footer-scene" width="100" height="24" viewBox="0 0 120 28">
       <rect x="10" y="8" width="100" height="3" fill="#333" rx="1"/>
       <g fill="#222">
         <circle cx="20" cy="20" r="5"/><rect x="17" y="22" width="6" height="6" rx="2"/>
-        <circle cx="35" cy="19" r="5"/><rect x="32" y="21" width="6" height="6" rx="2"/>
-        <circle cx="50" cy="20" r="5"/><rect x="47" y="22" width="6" height="6" rx="2"/>
-        <circle cx="65" cy="18" r="5"/><rect x="62" y="20" width="6" height="6" rx="2"/>
-        <circle cx="80" cy="20" r="5"/><rect x="77" y="22" width="6" height="6" rx="2"/>
-        <circle cx="95" cy="19" r="5"/><rect x="92" y="21" width="6" height="6" rx="2"/>
-        <circle cx="108" cy="20" r="5"/><rect x="105" y="22" width="6" height="6" rx="2"/>
+        <circle cx="40" cy="19" r="5"/><rect x="37" y="21" width="6" height="6" rx="2"/>
+        <circle cx="60" cy="20" r="5"/><rect x="57" y="22" width="6" height="6" rx="2"/>
+        <circle cx="80" cy="18" r="5"/><rect x="77" y="20" width="6" height="6" rx="2"/>
+        <circle cx="100" cy="20" r="5"/><rect x="97" y="22" width="6" height="6" rx="2"/>
       </g>
       <g fill="none" stroke="#ff3c00" stroke-width="0.7" opacity="0.5">
-        <line x1="20" y1="8" x2="15" y2="0"/>
-        <line x1="60" y1="8" x2="60" y2="0"/>
+        <line x1="20" y1="8" x2="15" y2="0"/><line x1="60" y1="8" x2="60" y2="0"/>
         <line x1="100" y1="8" x2="105" y2="0"/>
       </g>
     </svg>
@@ -925,6 +1085,13 @@
 </div>
 
 <script>
+// ═══════════════════════════════════
+// CONFIGURATION — filled in at setup
+// ═══════════════════════════════════
+const JSONBIN_BASE = 'https://api.jsonbin.io/v3/b';
+const LS_KEY  = 'wt2026_config';   // stores { apiKey, binId }
+const LS_HINT = 'wt2026_hint_seen';
+
 const TIERS = [
   { id:'S', label:'S', color:'#cc3000' },
   { id:'A', label:'A', color:'#c96000' },
@@ -933,6 +1100,8 @@ const TIERS = [
   { id:'D', label:'D', color:'#1a60a0' },
   { id:'F', label:'F', color:'#5e4a99' },
 ];
+
+const TIER_LABELS = { S:'Must see', A:'Really want to see', B:'Would enjoy', C:'If nothing else is on', D:'Probably skip', F:'Hard pass' };
 
 const BANDS = [
   "3OH!3","All That Remains","American Hi-Fi","Anberlin","Arm's Length",
@@ -959,32 +1128,175 @@ const BANDS = [
   "Waterparks","XCOMM","Yellowcard"
 ];
 
-const STORAGE_KEY = 'wt2026_stallings';
-
-let profiles = {};
+// ═══════════════════════════════════
+// STATE
+// ═══════════════════════════════════
+let cfg = null;          // { apiKey, binId }
+let profiles = {};       // { name: { band: tierId } }
 let activeUser = null;
 let state = {};
-let dragBand = null;
+let selectedBand = null;
 let filterText = '';
+let dragBand = null;
 
-function loadProfiles() {
-  try { profiles = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch { profiles = {}; }
+// ═══════════════════════════════════
+// JSONBIN API
+// ═══════════════════════════════════
+async function binCreate(data) {
+  const r = await fetch(JSONBIN_BASE, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Master-Key': cfg.apiKey,
+      'X-Bin-Name': 'wt2026-stallings',
+      'X-Bin-Private': 'false'
+    },
+    body: JSON.stringify(data)
+  });
+  if (!r.ok) throw new Error('Create failed: ' + r.status);
+  return await r.json();
 }
 
-function saveProfiles() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(profiles));
+async function binRead() {
+  const r = await fetch(JSONBIN_BASE + '/' + cfg.binId + '/latest', {
+    headers: { 'X-Master-Key': cfg.apiKey }
+  });
+  if (!r.ok) throw new Error('Read failed: ' + r.status);
+  const j = await r.json();
+  return j.record;
 }
 
+async function binUpdate(data) {
+  const r = await fetch(JSONBIN_BASE + '/' + cfg.binId, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Master-Key': cfg.apiKey
+    },
+    body: JSON.stringify(data)
+  });
+  if (!r.ok) throw new Error('Update failed: ' + r.status);
+  return await r.json();
+}
+
+// ═══════════════════════════════════
+// SYNC DOT
+// ═══════════════════════════════════
+function setSyncDot(state) {
+  const d = document.getElementById('sync-dot');
+  d.className = 'sync-dot' + (state ? ' ' + state : '');
+}
+
+// ═══════════════════════════════════
+// SETUP
+// ═══════════════════════════════════
+async function doSetup() {
+  const apiKey = document.getElementById('api-key-input').value.trim();
+  const binIdInput = document.getElementById('bin-id-input').value.trim();
+  const btn = document.getElementById('setup-btn');
+  const err = document.getElementById('setup-error');
+
+  if (!apiKey) { showError('Please enter your JSONBin Master Key.'); return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Connecting...';
+  err.style.display = 'none';
+
+  cfg = { apiKey, binId: binIdInput || null };
+
+  try {
+    if (!cfg.binId) {
+      // Create a new bin
+      const result = await binCreate({ profiles: {} });
+      cfg.binId = result.metadata.id;
+      profiles = {};
+    } else {
+      // Read existing bin
+      const data = await binRead();
+      profiles = data.profiles || {};
+    }
+    // Save config locally
+    localStorage.setItem(LS_KEY, JSON.stringify(cfg));
+    showProfileScreen();
+  } catch(e) {
+    cfg = null;
+    btn.disabled = false;
+    btn.textContent = 'Save & Continue';
+    showError('Could not connect: ' + e.message + '. Check your API key and Bin ID.');
+  }
+}
+
+function showError(msg) {
+  const err = document.getElementById('setup-error');
+  err.textContent = msg;
+  err.style.display = 'block';
+}
+
+// ═══════════════════════════════════
+// INIT
+// ═══════════════════════════════════
+async function init() {
+  const stored = localStorage.getItem(LS_KEY);
+  if (stored) {
+    try {
+      cfg = JSON.parse(stored);
+      const data = await binRead();
+      profiles = data.profiles || {};
+      showProfileScreen();
+    } catch(e) {
+      // Config stale or bin gone — go to setup
+      localStorage.removeItem(LS_KEY);
+      cfg = null;
+      showScreen('setup-screen');
+    }
+  } else {
+    showScreen('setup-screen');
+  }
+  document.getElementById('loading-overlay').style.display = 'none';
+}
+
+// ═══════════════════════════════════
+// SCREENS
+// ═══════════════════════════════════
+function showScreen(id) {
+  ['setup-screen','profile-screen','ranker-screen'].forEach(s => {
+    const el = document.getElementById(s);
+    el.style.display = 'none';
+  });
+  const target = document.getElementById(id);
+  target.style.display = id === 'profile-screen' ? 'flex' : (id === 'ranker-screen' ? 'block' : 'flex');
+}
+
+function showProfileScreen() {
+  showScreen('profile-screen');
+  renderProfileList();
+  // Show bin ID for sharing
+  if (cfg && cfg.binId) {
+    document.getElementById('bin-share').style.display = 'block';
+    document.getElementById('bin-id-display').textContent = cfg.binId;
+  }
+}
+
+function showProfiles() {
+  showScreen('profile-screen');
+  renderProfileList();
+}
+
+function copyBinId() {
+  navigator.clipboard.writeText(cfg.binId).then(() => {
+    const c = document.getElementById('copy-confirm');
+    c.style.display = 'inline';
+    setTimeout(() => c.style.display = 'none', 2000);
+  });
+}
+
+// ═══════════════════════════════════
+// PROFILES
+// ═══════════════════════════════════
 function freshState() {
   const s = {};
   BANDS.forEach(b => s[b] = 'unsorted');
   return s;
-}
-
-function showProfiles() {
-  document.getElementById('ranker-screen').style.display = 'none';
-  document.getElementById('profile-screen').style.display = 'flex';
-  renderProfileList();
 }
 
 function renderProfileList() {
@@ -1005,28 +1317,31 @@ function renderProfileList() {
         <div class="pname">${escHtml(name)}</div>
         <div class="pmeta">${ranked} / ${BANDS.length} ranked</div>
       </div>
-      <button class="pdel" title="Delete" onclick="deleteProfile(event,'${escAttr(name)}')">&#215;</button>
+      <button class="pdel" onclick="deleteProfile(event,'${escAttr(name)}')">&#215;</button>
     `;
-    item.addEventListener('click', () => loadUser(name));
+    item.addEventListener('click', (e) => {
+      if (e.target.classList.contains('pdel')) return;
+      loadUser(name);
+    });
     list.appendChild(item);
   });
 }
 
-function createProfile() {
+async function createProfile() {
   const input = document.getElementById('new-name');
   const name = input.value.trim();
   if (!name) return;
   if (!profiles[name]) profiles[name] = freshState();
-  saveProfiles();
-  loadUser(name);
   input.value = '';
+  await remoteSave();
+  loadUser(name);
 }
 
-function deleteProfile(e, name) {
+async function deleteProfile(e, name) {
   e.stopPropagation();
-  if (!confirm("Delete " + name + "'s rankings? This can't be undone.")) return;
+  if (!confirm('Delete ' + name + "'s rankings?")) return;
   delete profiles[name];
-  saveProfiles();
+  await remoteSave();
   renderProfileList();
 }
 
@@ -1035,22 +1350,74 @@ function loadUser(name) {
   if (!profiles[name]) profiles[name] = freshState();
   BANDS.forEach(b => { if (!(b in profiles[name])) profiles[name][b] = 'unsorted'; });
   state = profiles[name];
+  selectedBand = null;
   document.getElementById('active-user').textContent = name;
-  document.getElementById('profile-screen').style.display = 'none';
-  document.getElementById('ranker-screen').style.display = 'block';
   document.getElementById('search').value = '';
   filterText = '';
+
+  // Show/hide hint bar
+  const hintSeen = localStorage.getItem(LS_HINT);
+  const hintBar = document.getElementById('hint-bar');
+  if (hintSeen) {
+    hintBar.style.display = 'none';
+  } else {
+    hintBar.style.display = 'block';
+    localStorage.setItem(LS_HINT, '1');
+  }
+
   buildLegend();
+  showScreen('ranker-screen');
   render();
 }
 
+// ═══════════════════════════════════
+// REMOTE SAVE
+// ═══════════════════════════════════
+async function remoteSave() {
+  setSyncDot('busy');
+  try {
+    await binUpdate({ profiles });
+    setSyncDot('ok');
+    setTimeout(() => setSyncDot(''), 3000);
+  } catch(e) {
+    setSyncDot('err');
+    console.error('Save failed:', e);
+    throw e;
+  }
+}
+
+async function save() {
+  const btn = document.getElementById('save-btn');
+  const toast = document.getElementById('save-toast');
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+  profiles[activeUser] = state;
+  try {
+    await remoteSave();
+    toast.textContent = 'Saved \u2713';
+    toast.style.opacity = '1';
+    setTimeout(() => { toast.style.opacity = '0'; }, 2500);
+  } catch(e) {
+    toast.textContent = 'Save failed';
+    toast.style.opacity = '1';
+    setTimeout(() => { toast.style.opacity = '0'; }, 3000);
+  }
+  btn.disabled = false;
+  btn.textContent = 'Save';
+}
+
+// ═══════════════════════════════════
+// LEGEND
+// ═══════════════════════════════════
 function buildLegend() {
-  const labels = { S:'Must see', A:'Really want to see', B:'Would enjoy', C:'If nothing else is on', D:'Probably skip', F:'Hard pass' };
   document.getElementById('legend').innerHTML = TIERS.map(t =>
-    '<div class="legend-item"><div class="legend-dot" style="background:' + t.color + '"></div>' + labels[t.id] + '</div>'
+    '<div class="legend-item"><div class="legend-dot" style="background:' + t.color + '"></div>' + TIER_LABELS[t.id] + '</div>'
   ).join('');
 }
 
+// ═══════════════════════════════════
+// RENDER
+// ═══════════════════════════════════
 function render() { renderTiers(); renderPool(); }
 
 function renderTiers() {
@@ -1060,15 +1427,32 @@ function renderTiers() {
     const inTier = BANDS.filter(b => state[b] === tier.id);
     const row = document.createElement('div');
     row.className = 'tier-row';
+
     const label = document.createElement('div');
     label.className = 'tier-label';
     label.style.background = tier.color;
     label.textContent = tier.label;
+
+    // Tap tier label OR bands area to place selected band
+    const handleTierTap = () => {
+      if (selectedBand) {
+        state[selectedBand] = tier.id;
+        selectedBand = null;
+        render();
+      }
+    };
+
+    label.addEventListener('click', handleTierTap);
+
     const bands = document.createElement('div');
     bands.className = 'tier-bands';
     bands.dataset.tier = tier.id;
+    bands.addEventListener('click', handleTierTap);
+
+    // Desktop drag-and-drop on the bands area
     setupDrop(bands, tier.id);
-    inTier.forEach(b => bands.appendChild(makeChip(b)));
+
+    inTier.forEach(b => bands.appendChild(makeChip(b, tier.id)));
     row.appendChild(label);
     row.appendChild(bands);
     container.appendChild(row);
@@ -1079,26 +1463,50 @@ function renderPool() {
   const pool = document.getElementById('pool');
   pool.innerHTML = '';
   setupDrop(pool, 'unsorted');
+  pool.addEventListener('click', () => {
+    if (selectedBand) {
+      state[selectedBand] = 'unsorted';
+      selectedBand = null;
+      render();
+    }
+  });
+
   const unsorted = BANDS.filter(b => state[b] === 'unsorted');
   const filtered = filterText ? unsorted.filter(b => b.toLowerCase().includes(filterText)) : unsorted;
+
   if (filtered.length === 0) {
     const e = document.createElement('span');
     e.className = 'pool-empty';
-    e.textContent = filterText ? 'No matches' : 'All bands ranked!';
+    e.textContent = filterText ? 'No matches' : '&#127881; All bands ranked!';
     pool.appendChild(e);
   } else {
-    filtered.forEach(b => pool.appendChild(makeChip(b)));
+    filtered.forEach(b => pool.appendChild(makeChip(b, 'unsorted')));
   }
   document.getElementById('pool-count').textContent = unsorted.length;
 }
 
-function makeChip(band) {
+function makeChip(band, currentTier) {
   const chip = document.createElement('div');
-  chip.className = 'chip';
+  chip.className = 'chip' + (band === selectedBand ? ' selected' : '');
   chip.textContent = band;
   chip.draggable = true;
+  chip.dataset.band = band;
+
+  // TAP: select or deselect
+  chip.addEventListener('click', (e) => {
+    e.stopPropagation(); // don't bubble to tier bands area
+    if (selectedBand === band) {
+      selectedBand = null;
+    } else {
+      selectedBand = band;
+    }
+    render();
+  });
+
+  // DESKTOP DRAG
   chip.addEventListener('dragstart', e => {
     dragBand = band;
+    selectedBand = null;
     chip.classList.add('dragging');
     const ghost = document.getElementById('drag-ghost');
     ghost.textContent = band;
@@ -1106,12 +1514,14 @@ function makeChip(band) {
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setDragImage(document.createElement('div'), 0, 0);
   });
+
   chip.addEventListener('dragend', () => {
     chip.classList.remove('dragging');
     document.getElementById('drag-ghost').style.display = 'none';
     dragBand = null;
     document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
   });
+
   return chip;
 }
 
@@ -1121,10 +1531,14 @@ function setupDrop(el, tierId) {
   el.addEventListener('drop', e => {
     e.preventDefault();
     el.classList.remove('drag-over');
-    if (dragBand && state[dragBand] !== tierId) { state[dragBand] = tierId; render(); }
+    if (dragBand && state[dragBand] !== tierId) {
+      state[dragBand] = tierId;
+      render();
+    }
   });
 }
 
+// Desktop drag ghost follow
 document.addEventListener('dragover', e => {
   const ghost = document.getElementById('drag-ghost');
   if (ghost.style.display === 'block') {
@@ -1133,32 +1547,38 @@ document.addEventListener('dragover', e => {
   }
 });
 
-function filterPool() { filterText = document.getElementById('search').value.toLowerCase(); renderPool(); }
-
-function save() {
-  profiles[activeUser] = state;
-  saveProfiles();
-  const toast = document.getElementById('save-toast');
-  toast.textContent = 'Saved \u2713';
-  toast.style.opacity = '1';
-  setTimeout(() => { toast.style.opacity = '0'; }, 2000);
+// ═══════════════════════════════════
+// ACTIONS
+// ═══════════════════════════════════
+function filterPool() {
+  filterText = document.getElementById('search').value.toLowerCase();
+  selectedBand = null;
+  renderPool();
+  renderTiers();
 }
 
 function resetAll() {
   if (!confirm('Reset all your tier placements?')) return;
   BANDS.forEach(b => state[b] = 'unsorted');
+  selectedBand = null;
   render();
 }
 
+// ═══════════════════════════════════
+// UTILS
+// ═══════════════════════════════════
 function escHtml(s) { return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function escAttr(s) { return s.replace(/'/g, "\\'"); }
 
+// ═══════════════════════════════════
+// ENTER KEY SHORTCUTS
+// ═══════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('new-name').addEventListener('keydown', e => { if (e.key === 'Enter') createProfile(); });
+  document.getElementById('api-key-input').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('bin-id-input').focus(); });
+  document.getElementById('bin-id-input').addEventListener('keydown', e => { if (e.key === 'Enter') doSetup(); });
+  init();
 });
-
-loadProfiles();
-renderProfileList();
 </script>
 </body>
 </html>
